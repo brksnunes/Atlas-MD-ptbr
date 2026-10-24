@@ -64,27 +64,27 @@ export default {
   start: async (Atlas, m, { text, prefix, mentionByTag, doReact }) => {
     const suitableWords = {
       bite: "bited",
-      blush: "is blushing at",
+      blush: "está corando para",
       bonk: "bonked",
-      bully: "is bullying",
+      bully: "está zoando",
       cringe: "cringed at",
       cry: "cried in front of",
-      cuddle: "is cuddling",
-      dance: "is dancing with",
+      cuddle: "está de chamego com",
+      dance: "está dançando com",
       glomp: "glomped at",
       handhold: "holding hands of",
-      happy: "is happy with",
+      happy: "está feliz com",
       highfive: "high-fived at",
-      hug: "is hugging",
+      hug: "está abraçando",
       kick: "kicked",
       kill: "killed",
-      kiss: "is kissing",
-      lick: "is licking",
-      nom: "is eating with",
-      pat: "is patting",
-      poke: "is poking",
+      kiss: "está beijando",
+      lick: "está lambendo",
+      nom: "está comendo com",
+      pat: "está dando tapinha em",
+      poke: "está cutucando",
       slap: "slapped",
-      smile: "is smiling at",
+      smile: "está sorrindo para",
       smug: "smugged at",
       wave: "waved at",
       wink: "Winked at",
@@ -103,17 +103,17 @@ export default {
     let flag = true;
     if (command === "r" || command === "reaction") flag = false;
     if (!flag && !text) {
-      const reactionList = `🎃 *Available Reactions:*\n\n- ${reactions
+      const reactionList = `🎃 *Reações disponíveis:*\n\n- ${reactions
         .map((reaction) => capitalize(reaction))
         .join(
           "\n- "
-        )}\n🛠️ *Usage:* ${prefix}reaction (reaction) [tag/quote user] | ${prefix}(reaction) [tag/quote user]\nExample: ${prefix}pat`;
+        )}\n🛠️ *Uso:* ${prefix}reaction (reaction) [tag/quote user] | ${prefix}(reaction) [tag/quote user]\nExample: ${prefix}pat`;
       return void (await m.reply(reactionList));
     }
     const reaction = flag ? command : text.split(" ")[0].trim().toLowerCase();
     if (!flag && !reactions.includes(reaction))
       return void m.reply(
-        `Invalid reaction. Use *${prefix}react* to see all of the available reactions`
+        `Reação inválida. Use *${prefix}react* para ver todas as reações disponíveis`
       );
     const users = mentionByTag;
     if (m.quoted && !users.includes(m.quoted.sender))

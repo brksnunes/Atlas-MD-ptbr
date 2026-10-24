@@ -3,11 +3,11 @@ RUN apk upgrade --no-cache && \
     apk add --no-cache python3 make g++ gcc
 WORKDIR /app
 COPY package.json ./
-RUN npm i --omit=dev
+RUN npm i --omit=dev && npm i --no-save qrcode-terminal@0.12.0
 
 FROM node:24.11.1-alpine
 RUN apk upgrade --no-cache && \
-    apk add --no-cache ffmpeg imagemagick python3 curl unzip && \
+    apk add --no-cache ffmpeg imagemagick python3 curl unzip bash && \
     npm install -g pm2 && \
     curl -fsSL https://bun.sh/install | bash && \
     ln -s /root/.bun/bin/bun /usr/local/bin/bun && \

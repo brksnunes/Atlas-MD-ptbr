@@ -128,7 +128,7 @@ export default {
             val ? `${icon} *${label} :* ${val}` : null;
 
           const uptimeLines = [
-            L("🔋", "Bot Uptime", botUptime),
+            L("🔋", "Uptime do bot", botUptime),
             L("🖥️", "System Uptime", sysUptime),
           ].filter(Boolean);
           const memLines = [
@@ -149,7 +149,7 @@ export default {
             `⚡ *Atlas — System Status*`,
             ``,
             `👤 *User :* ${pushName}`,
-            `🤖 *Bot Status :* Online ✅`,
+            `🤖 *Status do bot:* Online ✅`,
             ...(ver ? [`🔖 *Version :* ${ver}`] : []),
             ...(uptimeLines.length
               ? [``, `*━━━━━ 🕐 Uptime ━━━━━*`, ...uptimeLines]
@@ -181,22 +181,22 @@ export default {
           "https://api.github.com/repos/FantoX/Atlas-MD",
         );
         let repo = repoInfo.data;
-        let txt = `            🧣 *${botName}'s Script* 🧣\n\n*🎀 Total Forks:* ${
+        let txt = `            🧣 *${botName}'s Script* 🧣\n\n*🎀 Total de forks:* ${
           repo.forks_count
-        }\n*⭐ Total Stars:* ${repo.stargazers_count}\n*📜 License:* ${
+        }\n*⭐ Total de estrelas:* ${repo.stargazers_count}\n*📜 Licença:* ${
           repo.license.name
-        }\n*📁 Repo Size:* ${(repo.size / 1024).toFixed(
+        }\n*📁 Tamanho do repo:* ${(repo.size / 1024).toFixed(
           2,
-        )} MB\n*📅 Last Updated:* ${repo.updated_at}\n\n*🔗 Repo Link:* ${
+        )} MB\n*📅 Última atualização:* ${repo.updated_at}\n\n*🔗 Link do repo:* ${
           repo.html_url
-        }\n\n❝ Dont forget to give a Star ⭐ to the repo. It's made with restless hardwork by *Team ATLAS*. ❞\n\n*©️ Team ATLAS- ${new Date().getFullYear()}*`;
+        }\n\n❝ Não esqueça de dar uma estrela ⭐ ao repo. Feito com muito esforço pela *Team ATLAS*. ❞\n\n*©️ Team ATLAS- ${new Date().getFullYear()}*`;
         Atlas.sendMessage(m.from, { image: pic, caption: txt }, { quoted: m });
         break;
 
       case "support":
       case "supportgc":
         await doReact("🔰");
-        let txt2 = `              🧣 *Support Group* 🧣\n\n*${botName}* is an open source project, and we are always happy to help you.\n\n*Link:* ${suppL}\n\n*Note:* Please don't spam in the group, and don't message *Admins directly* without permission. Ask for help inside *Group*.\n\n*Thanks for using Atlas.*`;
+        let txt2 = `              🧣 *Grupo de suporte* 🧣\n\n*${botName}* é um projeto open source, e estamos sempre felizes em ajudar.\n\n*Link:* ${suppL}\n\n*Nota:* não faça spam no grupo e não mande mensagem *direto para os Admins* sem permissão. Peça ajuda *no grupo*.\n\n*Obrigado por usar o Atlas.*`;
         Atlas.sendMessage(m.from, { image: pic, caption: txt2 }, { quoted: m });
         break;
 
@@ -334,7 +334,7 @@ export default {
           await doReact("❌");
           return Atlas.sendMessage(
             m.from,
-            { text: `Only *Owners* can restart the bot !` },
+            { text: `Somente *donos* podem reiniciar o bot!` },
             { quoted: m },
           );
         }
@@ -342,7 +342,7 @@ export default {
         await Atlas.sendMessage(
           m.from,
           {
-            text: `♻️ *Restarting bot...*\n\nBot will be back online shortly !`,
+            text: `♻️ *Reiniciando o bot...*\n\nEle volta em instantes!`,
           },
           { quoted: m },
         );

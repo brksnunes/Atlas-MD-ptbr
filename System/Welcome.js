@@ -5,7 +5,7 @@ export default async (Atlas, anu) => {
     const metadata = await Atlas.groupMetadata(anu.id);
     const participants = anu.participants;
     let desc = metadata.desc;
-    if (desc == undefined) desc = "No Description";
+    if (desc == undefined) desc = "Sem descrição";
 
     for (const numEntry of participants) {
       // Baileys v7 returns participants as objects {id, lid} instead of plain strings
@@ -22,15 +22,15 @@ export default async (Atlas, anu) => {
         const WAuserName = num;
 
         const Atlastext = `
-Hello @${WAuserName.split("@")[0]} Senpai,
+Olá @${WAuserName.split("@")[0]}! 👋
 
-Welcome to *${metadata.subject}*.
+Bem-vindo(a) ao grupo *${metadata.subject}*.
 
-*🧣 Group Description 🧣*
+*🧣 Descrição do grupo 🧣*
 
 ${desc}
 
-*Thank You.*
+*Seja bem-vindo(a)!*
   `;
         if (WELstatus) {
           await Atlas.sendMessage(anu.id, {
@@ -44,7 +44,7 @@ ${desc}
         const WAuserName = num;
 
         const Atlastext = `
-  @${WAuserName.split("@")[0]} Senpai left the group.
+  @${WAuserName.split("@")[0]} saiu do grupo.
   `;
         if (WELstatus) {
           await Atlas.sendMessage(anu.id, {

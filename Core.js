@@ -246,7 +246,7 @@ export default async (Atlas, m, commands, chatUpdate) => {
     if (body == prefix) {
       await doReact("❌");
       return m.reply(
-        `Bot is active, type *${prefix}help* to see the list of commands.`,
+        `O bot está ativo; digite *${prefix}help* para ver a lista de comandos.`,
       );
     }
     if (body.startsWith(prefix) && !icmd) {
@@ -255,7 +255,7 @@ export default async (Atlas, m, commands, chatUpdate) => {
         `*${budy.replace(
           prefix,
           "",
-        )}* - Command not found or plug-in not installed !\n\nIf you want to see the list of commands, type:    *_${prefix}help_*\n\nOr type:  *_${prefix}pluginlist_* to see installable plug-in list.`,
+        )}* - Comando não encontrado ou plugin não instalado!\n\nPara ver a lista de comandos, digite:    *_${prefix}help_*\n\nOr type:  *_${prefix}pluginlist_* para ver os plugins instaláveis.`,
       );
     }
 
@@ -287,7 +287,7 @@ export default async (Atlas, m, commands, chatUpdate) => {
               participant: m.sender,
             },
           });
-          const bvl = `\`\`\`「  Antilink System  」\`\`\`\n\n*⚠️ Link detected !*\n\n*🚫 @${m.sender.split("@")[0]}, you are not allowed to send links in this group !*\n`;
+          const bvl = `\`\`\`「 Sistema anti-link 」\`\`\`\n\n*⚠️ Link detectado!*\n\n*🚫 @${m.sender.split("@")[0]}, você não tem permissão para enviar links neste grupo!*\n`;
           await Atlas.sendMessage(from, { text: bvl, mentions: [m.sender] }, { quoted: m });
         }
       }
@@ -330,7 +330,7 @@ export default async (Atlas, m, commands, chatUpdate) => {
         console.log("No valid Gemini key provided, utilizing fallback API.");
         responseText = await fetchFallback(promptText);
       }
-      return responseText ? responseText.trim() : "Service unavailable at the moment.";
+      return responseText ? responseText.trim() : "Serviço indisponível no momento.";
     };
 
     if (m.isGroup && !isCmd && !icmd) {
