@@ -1,0 +1,59 @@
+# Deploy do Atlas-MD (fork PT-BR).
+#
+# NAO e o compose do upstream — o projeto original nao distribui um. Este arquivo foi
+# criado a partir do deploy real em producao (VM103 -> CT102) e versionado para que o
+# repo seja auto-suficiente: `docker compose up -d --build` sobe tudo.
+#
+# Diferencas propositais em relacao ao deploy original:
+#   - `build: .` no servico do bot: a imagem passa a ser construida do Dockerfile do repo,
+#     em vez de depender de uma `atlas-md:local` pre-existente no host.
+#   - monta ./Plugins ./System ./Frontend (layout do repo) em vez de ./Atlas-MD/<dir>,
+#     que era o layout do diretorio de deploy antigo. Editar plugin no host continua valendo sem rebuild.
+#   - porta do painel configuravel (PANEL_BIND/PANEL_PORT) em vez de 127.0.0.1 fixo:
+#     o Caddy hoje roda em outro host/LXC e nao alcanca loopback.
+#   - removida a rede externa `caddy_default`: o Caddy saiu do Docker, entao depender dela
+#     so quebrava o `up` em hosts onde ela nao existe.
+services:
+  mongo:
+    image: mongo:7
+    container_name: atlas-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - atlas
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  bot:
+    build: .
+    image: atlas-md:local
+    container_name: atlas-md
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      PREFIX: ${PREFIX:--}
+      MODS: ${MODS}
+      MONGODB: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/?authSource=admin
+      SESSION_ID: ${SESSION_ID}
+    volumes:
+      - ./Plugins:/app/Plugins
+      - ./System:/app/System
+      - ./Frontend:/app/Frontend
+    ports:
+      - "${PANEL_BIND:-127.0.0.1}:${PANEL_PORT:-10000}:10000"
+    networks:
+      - atlas
+
+networks:
+  atlas:
+    driver: bridge

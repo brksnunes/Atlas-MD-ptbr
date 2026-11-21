@@ -15,3 +15,11 @@ ExtraPlugins_
 atlas.log
 atlas.pid
 CONTEXT.md
+
+# --- deploy via docker compose (custom, ver docker-compose.yml) ---
+# Banco do Mongo (sessao/auth do bot) nunca vai para o repo
+mongo-data/
+# .env real do deploy (docker.env.example e o modelo)
+docker.env
+.env.*
+!.env.example
